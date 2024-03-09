@@ -13,10 +13,7 @@ const redirectUri = "http://localhost:3000/callback";
 
 let accessToken;
 
-app.get("/preview", (req, res) => {
-  //serve public/index.html
-  res.sendFile(__dirname + "/public/index.html");
-});
+app.use("/preview", express.static(__dirname + "/public"));
 
 // Route to initiate authentication
 app.get("/", (req, res) => {

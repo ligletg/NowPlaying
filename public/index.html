@@ -5,22 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Data Update</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script>
-      function fetchData() {
-        fetch("/currently-playing")
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            document.getElementById("album-cover").src = data.albumCover;
-          })
-          .catch((error) => console.error("Error fetching data:", error));
-      }
-
-      // Call fetchData every second
-      setInterval(fetchData, 1000);
-    </script>
+    <script src="preview.js"></script>
   </head>
   <body>
-    <img id="album-cover" />
+    <div class="album-cover" id="album-cover"></div>
   </body>
 </html>
