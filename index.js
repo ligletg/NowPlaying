@@ -66,6 +66,7 @@ app.get("/currently-playing", (req, res) => {
   request.get(options, (error, response, body) => {
     if (!error && response.statusCode === 200) {
       const albumCover = body.item.album.images[0].url;
+      const album = body.item.album.name;
       const artist = body.item.artists[0].name;
       const song = body.item.name;
       const songDuration = body.item.duration_ms;
@@ -74,6 +75,7 @@ app.get("/currently-playing", (req, res) => {
       const progressPercentage = (songProgress / songDuration) * 100;
       res.json({
         albumCover: albumCover,
+        album: album,
         artist: artist,
         song: song,
         progressPercentage: progressPercentage.toFixed(2),
