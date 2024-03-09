@@ -13,18 +13,13 @@ const redirectUri = "http://localhost:3000/callback";
 
 let accessToken;
 
-app.get("/", (req, res) => {
-  // display a button to initiate authentication
-  res.send('<a href="/login">Login with Spotify</a>');
-});
-
 app.get("/preview", (req, res) => {
   //serve public/index.html
   res.sendFile(__dirname + "/public/index.html");
 });
 
 // Route to initiate authentication
-app.get("/login", (req, res) => {
+app.get("/", (req, res) => {
   const scope = "user-read-currently-playing"; // Specify required scopes
   res.redirect(
     `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scope}&redirect_uri=${redirectUri}`
