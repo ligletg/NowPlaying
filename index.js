@@ -1,6 +1,7 @@
 const express = require("express");
 const request = require("request");
 const dotenv = require("dotenv");
+var cors = require("cors");
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const redirectUri = "http://localhost:3000/callback";
 let accessToken;
 
 app.use("/preview", express.static(__dirname + "/public"));
+app.use(cors());
 
 // Route to initiate authentication
 app.get("/", (req, res) => {

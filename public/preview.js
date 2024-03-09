@@ -9,9 +9,27 @@ function fetchData() {
 }
 
 function updateAlbumCover(albumCover) {
-  var targetDiv = document.querySelector("#album-cover");
-  var url = targetDiv.parentNode.href;
-  targetDiv.style.backgroundImage = "url(" + albumCover + ")";
+  const img = document.querySelector("#album-cover");
+  img.src = albumCover;
+  img.crossOrigin = "Anonymous";
+  // img.backgroundImage = "url(" + albumCover + ")";
+
+  const colorThief = new ColorThief();
+  if (img.complete) {
+    const color = colorThief.getColor(img);
+    updateBackgroundColor(color[0], color[1], color[2]);
+  } else {
+    img.addEventListener("load", function () {
+      const color = colorThief.getColor(img);
+      updateBackgroundColor(color[0], color[1], color[2]);
+    });
+  }
+}
+
+function updateBackgroundColor(red, green, blue) {
+  const color = `rgb(${red}, ${green}, ${blue})`;
+  const el = document.querySelector("#preview");
+  el.style.backgroundColor = color;
 }
 
 // Call fetchData every second
