@@ -85,6 +85,10 @@ app.get("/currently-playing", (req, res) => {
   });
 });
 
+app.get("*", function (req, res) {
+  res.redirect("/");
+});
+
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
 });

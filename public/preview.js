@@ -5,14 +5,17 @@ function fetchData() {
       console.log(data);
       updateAlbumCover(data.albumCover);
     })
-    .catch((error) => console.error("Error fetching data:", error));
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+      //autologin
+      window.open("http://localhost:3000/", "_self");
+    });
 }
 
 function updateAlbumCover(albumCover) {
   const img = document.querySelector("#album-cover");
   img.src = albumCover;
   img.crossOrigin = "Anonymous";
-  // img.backgroundImage = "url(" + albumCover + ")";
 
   const colorThief = new ColorThief();
   if (img.complete) {
