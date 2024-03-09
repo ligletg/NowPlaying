@@ -18,6 +18,11 @@ app.get("/", (req, res) => {
   res.send('<a href="/login">Login with Spotify</a>');
 });
 
+app.get("/preview", (req, res) => {
+  //serve public/index.html
+  res.sendFile(__dirname + "/public/index.html");
+});
+
 // Route to initiate authentication
 app.get("/login", (req, res) => {
   const scope = "user-read-currently-playing"; // Specify required scopes
@@ -47,7 +52,7 @@ app.get("/callback", (req, res) => {
   request.post(authOptions, (error, response, body) => {
     if (!error && response.statusCode === 200) {
       accessToken = body.access_token;
-      res.redirect("/currently-playing");
+      res.redirect("/preview");
     } else {
       res.send("Error: " + error);
     }
@@ -73,23 +78,13 @@ app.get("/currently-playing", (req, res) => {
       const previewUrl = body.item.preview_url;
       const songProgress = body.progress_ms;
       const progressPercentage = (songProgress / songDuration) * 100;
-      // Display the song information
-      res.send(`
-        <h3>Currently Playing</h3>
-        <div>
-          <img src="${albumCover}" style="width: 100px;">
-        </div>
-        <div>
-          <p>Artist: ${artist}</p>
-          <p>Song: ${song}</p>
-          <p>Progress: ${progressPercentage.toFixed(2)}%</p>
-          <audio controls>
-            <source src="${previewUrl}" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-      `);
-      // res.json(body);
+      res.json({
+        albumCover: albumCover,
+        artist: artist,
+        song: song,
+        progressPercentage: progressPercentage.toFixed(2),
+        previewUrl: previewUrl,
+      });
     } else {
       res.send("Error: " + error);
     }
